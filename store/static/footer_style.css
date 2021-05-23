@@ -1,0 +1,66 @@
+
+footer{
+    background-color: var(--light);
+}
+footer .foot-containers{
+    height: 50vh;
+    box-shadow: 0 5px 20px -10px rgba(0,0,0,0.57);
+    color: var(--primary);
+}
+footer .boxs{
+    flex:1;
+    margin-right: 2rem;
+    text-align: center;
+}
+footer .boxs ul{
+    list-style-type: none;
+    padding-left: 0 !important;
+}
+footer .boxs ul li a {
+    color: var(--secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+footer .boxs ul li a:hover{
+    color: var(--primary);
+}
+footer .boxs h3{
+    border-bottom: 1px solid var(--primary);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    font-size: 20px;
+    font-weight: 800;
+}
+footer .boxs p{
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+footer .boxs ul li{
+    margin-bottom: 1rem;
+}
+footer .boxs:nth-child(3) > div{
+    display: flex;
+    justify-content: center;
+}
+footer .boxs:nth-child(3){
+    text-align: left;
+}
+footer .boxs:nth-child(3) h3{
+    text-align: center;
+}
+footer .boxs:nth-child(3) > div img{
+    margin-right: 1rem;
+}
+
+@media (min-width: 280px) and (max-width:768px){
+    footer .foot-containers{
+        font-size: 1rem;
+        flex-direction: column;
+        height: 150vh;
+    }
+}
+@media (min-width: 768px) and (max-width:1366px){
+     footer .foot-containers{
+        font-size: 1.5rem;
+    }
+}

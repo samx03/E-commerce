@@ -1,0 +1,41 @@
+.list-group a:hover{
+    background-color: #404040;
+    transform: scale(1.01);
+    color: #fff;
+    transition: all 0.5s ease;
+}
+.add{
+    margin-right: 60px;
+}
+.cart{
+    display: flex;
+    margin-bottom: 20px;
+}
+.quantity{
+    margin: 0 2%;
+}
+.plus-buttons, .minus-buttons{
+    width: 50px;
+    height: 30px;
+    border-radius: 15px;
+	background: #404040 !important;
+	color: #ffffff !important ;
+    text-decoration: none;
+	transition: all .3s ease 0s;
+}
+.plus-buttons:hover, .minus-buttons:hover{
+    color: #404040 !important;
+	box-shadow: 0 5px 20px -10px rgba(0,0,0,0.57);
+	background-color: #ffffff !important;
+}
+
+@media (min-width:280px) and (max-width:990px){
+    .list-group{
+        margin-top: 10%;
+    }
+}
+@media (min-width:991px) and (max-width:1366px){
+    .list-group{
+        margin-top: 18%;
+    }
+}
