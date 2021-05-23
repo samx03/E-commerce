@@ -1,0 +1,234 @@
+{% extends 'base.html'  %}
+
+
+{% block content %}
+{% load static %}
+{% load cart %}
+{% load custom_filter %}
+<title>Product-detail</title>
+<style>
+
+.info{
+    display: flex;
+    align-items: center;
+    animation: slide 2s;
+}
+
+input.login-buttons{
+    animation: skewBtn 5s;
+    animation-delay:2s;
+    animation-iteration-count: infinite;
+}
+@keyframes skewBtn{
+    0%{
+        transform: rotate(2deg);
+    }
+    25%{
+        transform: rotate(-2deg);
+    }
+    50%{
+        transform: rotate(2deg);
+    }
+    75%{
+        transform: rotate(-2deg);
+    }
+    100%{
+        transform: rotate(2deg);
+    }
+}
+
+@keyframes slide {
+        from {
+            transform: translate(-1000px);
+        }
+
+        to {
+            transform: translate(0px);
+        }
+    }
+.img_box{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.img_box img{
+    width: 50%;
+    height: 60vh;
+}
+@media(max-width: 992px){
+    .img_box{
+        width: 90%;
+    }
+    .img_box img{
+        width: 70%;
+        height: 60vh;
+    }
+}
+@media(max-width: 768px){
+    .img_box img{
+        width: 90%;
+        height: 60vh;
+    }
+
+    .text_box{
+        width: 60% !important;
+    }
+}
+@media(max-width: 490px){
+    .info{
+        flex-direction: column;
+    }
+    .text_box{
+        width: 70% !important;
+    }
+    .carts{
+        margin-bottom: 15%;
+    }
+    .desc{
+        margin-bottom: 15% !important;
+    }
+}
+.text_box{
+    width: 50%;
+    text-align: center;
+}
+.carts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+select{
+    width: 60%;
+    height: 7vh;
+    text-align: center;
+    border-radius: 25px;
+    border: 2px solid #000000;
+}
+select:focus{
+    outline: none;
+    border: 2px solid #6675df;
+    border-radius: 25px;
+    transform: scaleX(1.1) scaleY(1.1);
+    transition: all 0.5s ease;
+}
+ select:focus::placeholder{
+    color: transparent;
+}
+
+.desc-heading{
+    width: 80%;
+    margin: auto;
+}
+.hero{
+    display: flex;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+.video{
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+}
+.video video{
+    margin-top: -15%;
+    max-width: 90%;
+    height: auto;
+    border-radius: 25px;
+}
+.desc{
+    width: 50%;
+    text-align: justify;
+    margin-bottom: 4%;
+    animation: slide 2s;
+}
+
+@media (max-width: 768px){
+    .hero{
+        flex-direction: column-reverse;
+    }
+    .desc{
+        width: 80%;
+    }
+    .video{
+        height: 35vh;
+    }
+    .video video{
+        max-width: 140%;
+    }
+}
+@media (max-width: 500px){
+    .desc{
+        width: 90%;
+    }
+    .video{
+        height: 40vh;
+    }
+    .video video{
+        max-width: 210%;
+    }
+}
+</style>
+<div class="container info">
+        <div class="img_box">
+            <img src="{{product.image.url}}" alt="product-image" class="img-fluid">
+        </div>
+        <div class="text_box">
+            <h2>{{product.name}}</h2>
+            <h4>{{product.price|currency}}</h4><br>
+<!--            <select name="" id="">-->
+<!--                <option value="">Litre:</option>-->
+<!--                <option value="">200ml</option>-->
+<!--                <option value="">500ml</option>-->
+<!--                <option value="">1lt</option>-->
+<!--                <option value="">5lt</option>-->
+<!--            </select><br><br>-->
+            <div class="carts">
+                        {% if product.out_of_stock %}
+                        <div class="alert alert-danger"> Out of Stock</div>
+                        {% else %}
+                        {% if product|is_in_cart:request.session.cart %}
+                        <form action="/product#{{product.id}}" method="POST">
+                            {% csrf_token %}
+                            <input hidden type="text" name="product" value='{{product.id}}'>
+                            <input type="submit" value="+" class="plus-buttons">
+                        </form>
+                        <div class="text-center quantity">{{product|cart_count:request.session.cart}}</div>
+                        <form action="/product#{{product.id}}" method="POST">
+                            {% csrf_token %}
+                            <input hidden type="text" name="product" value='{{product.id}}'>
+                            <input hidden type="text" name="remove" value='True'>
+                            <input type="submit" value="-" class="minus-buttons">
+                        </form>
+                        {% else %}
+                        <form action="/product#{{product.id}}" method="POST">
+                            {% csrf_token %}
+                            <input hidden type="text" name="product" value='{{product.id}}'>
+                            <input type="submit" class="login-buttons" value="Add To Cart">
+                        </form>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+        </div>
+
+    </div>
+
+    <div class="desc-heading">
+        <h1>Description:</h1>
+        <hr>
+    </div>
+    <div class="hero">
+        <div class="desc container">
+            <p>{{product.description|safe}}</p>
+        </div>
+        <div class="video">
+            <video src="{{product.video.url}}" controls></video>
+        </div>
+    </div>
+
+
+{% endblock %}

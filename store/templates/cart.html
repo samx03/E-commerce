@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load cart %}
+{% load custom_filter %}
+{% load static %}
+<title>Cart</title>
+<style>
+    h3 {
+        font-size: 40px;
+        margin-bottom: 3%;
+        animation: cart 2s;
+    }
+
+    .table {
+        border-radius: 25px;
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+        animation: slide 2s;
+    }
+
+    .product_img {
+        width: 70px;
+    }
+
+    tfoot {
+        font-size: 20px;
+    }
+
+    .checkout {
+        margin-bottom: 2%;
+        display: block;
+        width: 99%;
+        text-align: right;
+    }
+
+    .modal-backdrop {
+        z-index: -1;
+    }
+
+    .content-box {
+        width: 100%;
+        height: 130vh;
+        background-color: #f7f7f7;
+        font-family: "Raleway-medium";
+    }
+
+    .content-box .icon {
+        width: 38%;
+        margin-bottom: 10%;
+    }
+
+    .content-box .login-form input {
+        width: 60%;
+        height: 7vh;
+        padding: 1px;
+        text-align: center;
+        border-radius: 25px;
+        font-family: "Raleway-regular";
+        border-style: hidden;
+    }
+
+    .content-box .login-form input:focus {
+        outline: none;
+        border: 2px solid #6675df;
+        border-radius: 25px;
+        transform: scaleX(1.1) scaleY(1.1);
+        transition: all 0.5s ease;
+    }
+
+    .content-box .login-form input:focus::placeholder {
+        color: transparent;
+    }
+
+
+    @keyframes animate {
+        from {
+            opacity: 0;
+            transform: rotateX(-10deg);
+        }
+
+        to {
+            opacity: 1;
+            transform: rotateX(0);
+        }
+    }
+
+    @media (max-width:1040px) {
+
+        .content-box .icon {
+            width: 28%;
+        }
+
+        .content-box .login-form input {
+            width: 60%;
+        }
+    }
+
+    @media (max-width:500px) {
+
+        .content-box .icon {
+            width: 35%;
+            margin-bottom: 5%;
+        }
+    }
+
+    @keyframes cart {
+        from {
+            transform: scale(-1);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @keyframes slide {
+        from {
+            transform: scale(0);
+        }
+
+        to {
+            transform: scale(1);
+        }
+    }
+
+    @media(max-width: 768px) {
+        .container {
+            margin-top: 20%;
+        }
+
+        .product_img {
+            width: 100px;
+        }
+    }
+</style>
+<div class="container">
+    <div class="container table-responsive">
+        <table class="table text-center">
+            <h3><img src="{% static 'icons/shop-cart.png' %}" alt="cart-logo">Cart</h3>
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody style="vertical-align: middle; font-size: 20px;">
+
+                {% for product in products %}
+                <td>{{forloop.counter}}</td>
+                <td><img src="{{product.image.url}}" class="img-fluid product_img"
+                        alt="{{product.name}}"><br>{{product.name}}
+                </td>
+                <td>{{product.price|currency}}</td>
+                <td>{{product|cart_count:request.session.cart}}</td>
+                <td>{{product|price_total:request.session.cart|currency}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th colspan="3"></th>
+                    <th>{{products|total_cart_price:request.session.cart|currency}}</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="checkout">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+        class="login-buttons text-center">Online Payment</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModals"
+        class="login-buttons text-center">Cash on delivery</a>
+        <a class="login-buttons btn" href="/product">Continue Shopping</a>
+        </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section class="flex">
+                    <div class="content-box justify-center align-items text-center">
+                        <form action="/check-out" method="POST" class="login-form">
+                            {% csrf_token %}
+                            <img src="{% static 'icons/checkout.png' %}" alt="Icon" class="icon"><br>
+                            <input type="text" placeholder="FirstName" name="firstName" style="margin: 2%;" required ><br>
+                            <input type="text" placeholder="LastName" name="lastName" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="House number and street name" name="address" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="Town/City" name="town_city" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="State" name="state" style="margin: 2%;" required><br>
+                            <input type="number" placeholder="Pincode" name="pincode" style="margin: 2%;" required><br>
+                            <input type="tel" placeholder="Phone No." name="phone" style="margin: 2%;" required><br><br><hr>
+                            <input type="submit" class="login-buttons" value="Checkout"><br><br>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="exampleModals" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <section class="flex">
+                    <div class="content-box justify-center align-items text-center">
+                        <form action="/cashOnDelivery" method="POST" class="login-form">
+                            {% csrf_token %}
+                            <img src="{% static 'icons/checkout.png' %}" alt="Icon" class="icon"><br>
+                            <input type="text" placeholder="FirstName" name="firstName" style="margin: 2%;" required ><br>
+                            <input type="text" placeholder="LastName" name="lastName" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="House number and street name" name="address" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="Town/City" name="town_city" style="margin: 2%;" required><br>
+                            <input type="text" placeholder="State" name="state" style="margin: 2%;" required><br>
+                            <input type="number" placeholder="Pincode" name="pincode" style="margin: 2%;" required><br>
+                            <input type="tel" placeholder="Phone No." name="phone" style="margin: 2%;" required><br><br><hr>
+                            <input type="submit" class="login-buttons" value="Checkout" style="margin-bottom: 6%;"><br><br>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+</script>
+    {% endblock %}

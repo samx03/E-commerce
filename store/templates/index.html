@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static  'index____Style.css' %}">
+    <link rel="stylesheet" href="{% static  'footer_style.css' %}">
+    <title>E-shop</title>
+</head>
+<style>
+    video{
+        padding: 60px 20px;
+        max-width: 50%;
+        height: auto;
+    }
+    @media(max-width: 600px){
+        video{
+            max-width: 90%;
+        }
+    }
+    @media(max-width: 360px){
+        video{
+            max-width: 100%;
+        }
+    }
+</style>
+<body>
+ <div class="main-wrapper">
+        <div class="nav-background">
+            <div class="mobile-logo">
+                <p><img src="{% static 'images/logo.jpeg' %}" alt="logo" style="width: 120px; height: 75px;"></p>
+            </div>
+            <div class="mobile-nav">
+                <div class="nav-top">
+                    <ul>
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li>
+                            <a href="/About-us">About</a>
+                        </li>
+                        <li>
+                            <a href="/Contact-us">Contact-Us</a>
+                        </li>
+                        <li>
+                            <a href="/product">Shop Now!</a>
+                        </li>
+                        <li>
+                            {% if request.session.customer %}
+                         <li><a href="/orders">Orders</a></li>
+                         <li><a href="/cart">Cart <span class="cart_count">{{request.session.cart.keys|length}}</span></a></li>
+                         <li><a href="/logout">Logout</a></li>
+                         {% else %}
+                         <li><a href="/cart">Cart</a></li>
+                         <li><a href="/login"><img src="{% static 'icons/login.png' %}" alt="Login">Login</a></li>
+                         {% endif %}
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="site-content-wrap">
+            <div class="nav-trigger">
+                <svg viewBox="0 0 100 80" width="40" height="40">
+                    <rect width="100" height="20"></rect>
+                    <rect y="30" width="100" height="20"></rect>
+                    <rect y="60" width="100" height="20"></rect>
+                  </svg>
+            </div>
+                <div class="site-content">
+                    <div class="navbar flex justify-between align-items">
+                        <a href="/About-us" class="brand"><img src="{% static 'images/logo.jpeg' %}" alt="logo" style="width: 90px; height: 80px;"></a>
+                        <a href=""><img src="{% static 'icons/home.png' %}" alt="Home">Home</a>
+                        <a href="/product"><img src="{% static 'icons/shop.png' %}" alt="About"> Shop-now</a>
+                        <a href="/Contact-us"><img src="{% static 'icons/contact-us.png' %}" alt="contact-us">Contact Us!</a>
+                         {% if request.session.customer %}
+                         <a href="/orders" class="login-button btn">Orders</a>
+                         <a href="/cart" class="login-button btn btn1">Cart <span class="cart_count">{{request.session.cart.keys|length}}</span></a>
+                         <a href="/logout" class="login-button btn">Logout</a>
+                         {% else %}
+                         <a href="/cart" class="login-button btn">Cart</a>
+                         <a href="/login" class="login-button btn"><img src="{% static 'icons/login.png' %}" alt="Login">Login</a>
+                         {% endif %}
+                    </div>
+
+                    <div class="container">
+                        <div class="container-para flex justify-between align-items">
+                        <p> <span class="E">G</span>et <span  class="discount">20%</span><br> Off On Your Bulk Purchase!<br></p>
+<!--                            <img src="{% static 'images/wellnessgold.jpg' %}" alt="" class="section-image">-->
+                            <video src="{% static 'video/hello.mp4' %}" controls autoplay></video>
+                        </div>
+                        <div class="buttons">
+                            <a class="login-button btn" href="/About-us">Read More!</a>
+                            <a class="login-button btn" href="/product">Shop Now!</a>
+                        </div>
+                    </div>
+                    <div class="top-container flex justify-center align-items">
+                        <p class="para">Our products!</p>
+                    </div>
+                    <div class="project-container">
+
+                        {% for product in top %}
+                        <a class="project-tile" href="/product">
+                          <img src="{{product.image_of_product.url}}" alt="Image" class="project-image">
+                          <p class="project-title">{{product.Name_of_product}}</p>
+                        </a>
+                        {% endfor %}
+
+                    </div>
+                    <footer>
+                        <div class="foot-containers flex justify-around">
+                            <div class="boxs">
+                                <h3>About Us</h3>
+                                <p>We manufacture a series of cleaning products such as toilet cleaner, floor cleaner, glas cleaner.</p>
+                                <a class="login-button btn" href="/About-us">Read More</a>
+                            </div>
+                            <div class="boxs">
+                                <h3>Quick Links</h3>
+                               <ul>
+                                   <li>
+                                       <a href="/">Home</a>
+                                   </li>
+                                   <li>
+                                       <a href="/About-us">About Us!</a>
+                                   </li>
+                                   <li>
+                                       <a href="/product">Products</a>
+                                   </li>
+                                <li>
+                                    <a href="/Contact-us">Contact Us!</a>
+                                </li>
+                               </ul>
+                            </div>
+                            <div class="boxs">
+                                <h3>Follow Us!</h3>
+                                <div>
+                                <ul>
+                                    <li>
+                                        <img src="{% static 'icons/instagram.png' %}" alt="">
+                                        <a href="#">Instagram</a>
+                                    </li>
+                                    <li>
+                                        <img src="{% static 'icons/facebook.png' %}" alt="">
+                                        <a href="#">Facebook</a>
+                                    </li>
+                                    <li>
+                                        <img src="{% static 'icons/twitter.png' %}" alt="">
+                                        <a href="#">Twitter</a>
+                                    </li>
+                                    <li>
+                                        <img src="{% static 'icons/google-plus.png' %}" alt="">
+                                     <a href="#">Google</a>
+                                 </li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="boxs">
+                                <h3>Address</h3>
+                                <p>B-9, Garden city, Radhika road, Satara.</p>
+                            </div>
+                        </div>
+                        </footer>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{% static  'app.js' %}"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,116 @@
+{% extends 'base.html'  %}
+
+{% load static %}
+{% block content %}
+<title>Contact-Us</title>
+<style>
+    body {
+        animation: animate 2s;
+
+    }
+
+    @keyframes animate {
+        from {
+            opacity: 0;
+            transform: rotateX(-10deg);
+        }
+
+        to {
+            opacity: 1;
+            transform: rotateX(0);
+        }
+    }
+
+    .name {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        animation: slide 1s linear;
+    }
+
+    .logo {
+        width: 20%;
+    }
+
+    @keyframes slide {
+        from {
+            transform: scaleX(-1);
+        }
+
+        to {
+            transform: scaleX(1);
+        }
+    }
+
+    #contact {
+        background-image: linear-gradient(315deg, #ffffff 0%, #d7e1ec 74%);
+        width: 80%;
+        height: 70vh;
+        margin: auto;
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-column-gap: 5%;
+        border-radius: 25px;
+        margin-bottom: 5%;
+    }
+
+    .contact-container {
+        width: 90%;
+        height: 20vh;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 25px;
+    }
+
+    .contact-container:hover {
+        transform: scale(1.05);
+        color: #404040;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.57);
+        transition: all 2s ease;
+    }
+
+    .contact-tile {
+        font-size: 30px;
+    }
+
+    @media (max-width: 900px) {
+        #contact {
+            grid-template-columns: auto auto;
+        }
+
+        .contact-tile {
+            font-size: 25px;
+        }
+    }
+    @media (max-width: 600px) {
+        #contact {
+            grid-template-columns: auto;
+        }
+        .contact-tile {
+            font-size: 20px;
+        }
+    }
+</style>
+
+    <div class="name">
+        <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="logo">
+        <h1>Contact Us!</h1>
+    </div>
+    <section id="contact">
+        <div class="contact-container">
+            <p class="contact-tile"> <img src="{% static 'images/phone-call.png' %}" alt="Call" style="display: block; margin: auto;">
+                9307667186</p>
+        </div>
+        <div class="contact-container">
+            <p class="contact-tile"> <img src="{% static 'images/email (3).png' %}" alt="Call" style="display: block; margin: auto;">
+                rgold.hp@gmail.com</p>
+        </div>
+        <div class="contact-container">
+            <p class="contact-tile"> <img src="{% static 'images/location.png' %}" alt="Call" style="display: block; margin: auto;">
+                Satara,Maharashtra</p>
+        </div>
+    </section>
+{% endblock %}

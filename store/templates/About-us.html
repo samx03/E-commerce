@@ -1,0 +1,180 @@
+{% extends 'base.html'  %}
+
+{% load static %}
+{% block content %}
+<title>About-Us</title>
+<style>
+        body {
+            animation: animate 2s;
+            font-family: 'Raleway-medium';
+        }
+
+        @keyframes animate {
+            from {
+                opacity: 0;
+                transform: rotateX(-10deg);
+            }
+
+            to {
+                opacity: 1;
+                transform: rotateX(0);
+            }
+        }
+
+        .names {
+            width: 80%;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            animation: slide 1s linear;
+        }
+        .names h1{
+            color: #404040;
+        }
+
+        @keyframes slide {
+            from {
+                transform: scaleX(-1);
+            }
+
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .logo {
+            width: 20%;
+        }
+
+        .mains {
+            width: 80%;
+            margin: auto;
+            margin-top: 5%;
+        }
+
+        .list{
+            list-style: none;
+            text-align: justify;
+        }
+
+        .point {
+            vertical-align: middle;
+            animation: rotation 2s linear;
+        }
+
+        .mains ul li {
+            font-size: 20px;
+            color: #404040;
+        }
+
+        .shop-video {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80%;
+            margin: auto;
+        }
+        .shop-name {
+            width: 50%;
+        }
+        .shop-name img{
+            max-width: 50%;
+            height: auto;
+        }
+
+        .video {
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50%;
+            margin-left: -20%;
+        }
+
+        .video video {
+            max-width: 90%;
+            height: auto;
+            border-radius: 25px;
+        }
+@media (max-width: 768px){
+    .names{
+        margin-top: 20%;
+    }
+    .shop-video{
+        flex-direction: column;
+    }
+    .video {
+        height: 35vh;
+        width: 51%;
+        margin-left: 0;
+    }
+    .video video{
+        max-width: 140%;
+    }
+    .shop-name {
+        margin-right: -20%;
+    }
+}
+@media (max-width: 500px){
+    .video{
+        height: 40vh;
+    }
+    .video video{
+        max-width: 210%;
+    }
+}
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(180deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+
+</style>
+
+<div class="names">
+    <img src="{% static 'images/logo.jpeg' %}" alt="Logo" class="logo">
+    <h1>About Us!</h1>
+</div>
+<div class="mains">
+    <ul>
+        <li class="list"><img src="{% static 'images/point.png' %}" alt="point" class="point"> Wellness gold is
+            trademarked series of a cleaning
+            products of
+            the R GOLD HYGIENIC PRODUCTS PRIVATE LIMITE.
+            Company is located at satara maharashtra
+        </li>
+        <li class="list"><img src="{% static 'images/point.png' %}" alt="point" class="point"> We manufacture a series
+            of cleaning products such
+            as<span style="color: blue;"> toilet
+                cleaner, floor cleaner, glas cleaner.</span></li>
+        <li class="list"><img src="{% static 'images/point.png' %}" alt="point" class="point"> Our upcoming products
+            will be a car wash, kitchen cleaner, mosquito repellent, bleach, detergent powder, and detergent soap,
+            detergent liquid, Air fresheners, car air fresheners, mothballs, and many other products.
+        </li>
+        <li class="list"><img src="{% static 'images/point.png' %}" alt="point" class="point"> We will ensure that we
+            will give best quality
+            products at
+            lowest price as quick as possible.
+        </li>
+        <li class="list"><img src="{% static 'images/point.png' %}" alt="point" class="point"> Thank you
+            <b>Prithviraj
+                Ceo/director</b> of
+            R Gold hygienic products Pvt. ltd
+        </li>
+    </ul>
+</div>
+<div class="shop-video">
+    <div class="shop-name">
+        <img src="{% static 'images/logo.jpeg' %}" alt="Logo">
+    </div>
+    <div class="video">
+        <video src="{% static 'video/wellness gold.mp4' %}" controls></video>
+    </div>
+</div>
+{% endblock %}
